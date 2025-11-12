@@ -4,7 +4,12 @@
     box-sizing: border-box;
 }
 
-/* LoginScreenStyle.css - Dark Mode */
+.loginScreenBG{
+    background-image: url('../../assets/fondoDos.png');
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
 
 .loginBox {
   max-width: 400px;

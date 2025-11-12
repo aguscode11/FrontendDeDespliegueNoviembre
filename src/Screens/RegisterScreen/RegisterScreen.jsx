@@ -3,6 +3,7 @@ import useForm from '../../hooks/useForm'
 import { register } from '../../services/authService'
 import useFetch from '../../hooks/useFetch'
 import './RegisterScreenStyle.css'
+import  "../../assets/fondo.jpg"
 
 
 
@@ -52,53 +53,56 @@ const RegisterScreen = () => {
     
     
   return (
-    <div class="registerBox">
-        <h1>Registrate</h1>
-        <form onSubmit={handleSubmit} className='registerForm'>
-            <div className='form-field'>
-                <label htmlFor="username">Nombre de usuario:</label>
-                <input 
-                    type="text" 
-                    placeholder='pepe' 
-                    value={form_state[REGISTER_FORM_FIELDS.USERNAME]}
-                    name={REGISTER_FORM_FIELDS.USERNAME}
-                    id='username'
-                    onChange={onInputChange}
-                />
-            </div>
-            <div className='form-field'>
-                <label htmlFor="email">Email:</label>
-                <input 
-                    type="text" 
-                    placeholder='pepe@mail.com' 
-                    value={form_state[REGISTER_FORM_FIELDS.EMAIL]}
-                    name={REGISTER_FORM_FIELDS.EMAIL}
-                    onChange={onInputChange}
-                    id={'email'}
-                />
-            </div>
-            <div className='form-field'>
-                <label htmlFor="password">Contraseña:</label>
-                <input 
-                    type="text" 
-                    placeholder='pepe-123' 
-                    value={form_state[REGISTER_FORM_FIELDS.PASSWORD]}
-                    name={REGISTER_FORM_FIELDS.PASSWORD}
-                    onChange={onInputChange}
-                    id={'password'}
-                />
-            </div>
-            {error && <span style={{color: 'red'}}> {error} </span>}
-            {response && <span style={{color: 'green'}}> Usuario registrado con exito! </span>}
-            {
-                loading 
-                ? <button disabled>Registrando</button>
-                : <button>Registrarse</button>
-            }
-            <a href="/login">¿Ya tienes una cuenta?</a>
-            
-        </form>
-    </div>
+      <div className='background'>
+        <img src="" alt="" />
+          <div class="registerBox">
+              <h1>Registrate</h1>
+              <form onSubmit={handleSubmit} className='registerForm'>
+                  <div className='form-field'>
+                      <label htmlFor="username">Nombre de usuario:</label>
+                      <input
+                          type="text"
+                          placeholder='pepe'
+                          value={form_state[REGISTER_FORM_FIELDS.USERNAME]}
+                          name={REGISTER_FORM_FIELDS.USERNAME}
+                          id='username'
+                          onChange={onInputChange}
+                      />
+                  </div>
+                  <div className='form-field'>
+                      <label htmlFor="email">Email:</label>
+                      <input
+                          type="text"
+                          placeholder='pepe@mail.com'
+                          value={form_state[REGISTER_FORM_FIELDS.EMAIL]}
+                          name={REGISTER_FORM_FIELDS.EMAIL}
+                          onChange={onInputChange}
+                          id={'email'}
+                      />
+                  </div>
+                  <div className='form-field'>
+                      <label htmlFor="password">Contraseña:</label>
+                      <input
+                          type="text"
+                          placeholder='pepe-123'
+                          value={form_state[REGISTER_FORM_FIELDS.PASSWORD]}
+                          name={REGISTER_FORM_FIELDS.PASSWORD}
+                          onChange={onInputChange}
+                          id={'password'}
+                      />
+                  </div>
+                  {error && <span style={{ color: 'red' }}> {error} </span>}
+                  {response && <span style={{ color: 'green' }}> Usuario registrado con exito! Verifica tu mail para activar tu cuenta. </span>}
+                  {
+                      loading
+                          ? <button disabled>Registrando</button>
+                          : <button>Registrarse</button>
+                  }
+                  <a href="/login">¿Ya tienes una cuenta?</a>
+
+              </form>
+          </div>
+      </div>
   )
 }
 
