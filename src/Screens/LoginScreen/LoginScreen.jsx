@@ -4,6 +4,7 @@ import { login } from '../../services/authService'
 import useForm from '../../hooks/useForm'
 import useFetch from '../../hooks/useFetch'
 import { AuthContext } from '../../Context/AuthContext'
+import './LoginScreenStyle.css'
 
 const LoginScreen = () => {
   const navigate = useNavigate()
@@ -64,26 +65,28 @@ const LoginScreen = () => {
         [response]
     )
   return (
-      <div className="Form-container">
-        <form onSubmit={handleSubmit}>
+      <div className="loginBox">
+        <form onSubmit={handleSubmit} className='loginForm'> 
           <div className="form-field">
             <label htmlFor="email">Email: </label>
             <input  type="text" placeholder="jose@algo.com" value={form_state[LOGIN_FORM_FIELDS.EMAIL]} name={LOGIN_FORM_FIELDS.EMAIL} onChange={onInputChange} id={'email'} />
           </div>
 
-          <div>
+          <div className='form-field'>
             <label htmlFor="password">Password: </label>
             <input type="text" placeholder="Josesito206" value={form_state[LOGIN_FORM_FIELDS.PASSWORD]} name={LOGIN_FORM_FIELDS.PASSWORD} onChange={onInputChange} id={'password'} />
           </div>
 
-          {error && <span style={{ color: 'red' }}> {error} </span>}
-          {response && <span style={{ color: 'green' }}> Successful Login </span>}
+        {error && <span className="errorMessage">{error}</span>}
+        {response && <span className="successMessage">Successful Login</span>}
+
 
           {
             loading
               ? <button disabled>Loggin In</button>
-              : <button>Login</button>
+              : <button className="loginButton">Login</button>
           }
+          <a href="/register">¿No tienes cuenta?</a>
         </form>
       </div>
       )

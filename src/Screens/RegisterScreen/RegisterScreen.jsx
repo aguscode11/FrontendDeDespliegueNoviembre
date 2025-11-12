@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import useForm from '../../hooks/useForm'
 import { register } from '../../services/authService'
 import useFetch from '../../hooks/useFetch'
+import './RegisterScreenStyle.css'
 
 
 
@@ -51,9 +52,9 @@ const RegisterScreen = () => {
     
     
   return (
-    <div>
+    <div class="registerBox">
         <h1>Registrate</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='registerForm'>
             <div className='form-field'>
                 <label htmlFor="username">Nombre de usuario:</label>
                 <input 
@@ -94,6 +95,7 @@ const RegisterScreen = () => {
                 ? <button disabled>Registrando</button>
                 : <button>Registrarse</button>
             }
+            <a href="/login">¿Ya tienes una cuenta?</a>
             
         </form>
     </div>
