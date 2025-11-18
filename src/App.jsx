@@ -11,25 +11,22 @@ import './App.css';
 
 function App() {
   return (
-    <AuthContextProvider>
+    <>
       <div className="App">
         <Navbar />
         <Routes>
-          {/* Rutas públicas */}
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/register" element={<RegisterScreen />} />
-          
-          {/* Rutas protegidas por AuthMiddleware */}
+
           <Route element={<AuthMiddleware />}>
             <Route path="/home" element={<HomeScreen />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
-          
-          {/* Ruta por defecto */}
-          <Route path="/" element={<Navigate to="/home" />} />
+
+          <Route path="/" element={<Navigate to="/login" />} />
         </Routes>
       </div>
-    </AuthContextProvider>
+    </>
   )
 }
 
