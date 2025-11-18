@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import TaskForm from './TaskForm'
-import TaskList from './taskList'
+import TaskList from './TaskList'
 
 const Dashboard = () => {
   const [refreshTasks, setRefreshTasks] = useState(0)
