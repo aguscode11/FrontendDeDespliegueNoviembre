@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+/* import React, { useEffect } from 'react'
 import useFetch from '../../hooks/useFetch'
 import { getWorkspaces } from '../../services/workspaceService'
 import { Link } from 'react-router'
@@ -41,6 +41,22 @@ const HomeScreen = () => {
           }
         </div>
       }
+    </div>
+  )
+}
+
+export default HomeScreen */
+
+import { useContext } from 'react'
+import { AuthContext } from '../../Context/AuthContext'
+import Dashboard from '../../Components/Dashboard'
+
+const HomeScreen = () => {
+  const { user } = useContext(AuthContext)
+  
+  return (
+    <div className="home-screen">
+      <Dashboard />
     </div>
   )
 }
