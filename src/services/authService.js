@@ -1,10 +1,10 @@
 import ENVIRONMENT from "../config/environment"
 
-export async function register (username, email, password){
+export async function register (name, email, password){
 
     try{
         const body = {
-            name: username, 
+            name: name, 
             email,
             password
         }
