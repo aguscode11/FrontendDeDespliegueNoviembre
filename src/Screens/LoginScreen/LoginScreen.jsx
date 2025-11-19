@@ -71,12 +71,12 @@ const LoginScreen = () => {
         <form onSubmit={handleSubmit} className='loginForm'>
           <div className="form-field">
             <label htmlFor="email">Email: </label>
-            <input type="text" placeholder="jose@algo.com" value={form_state[LOGIN_FORM_FIELDS.EMAIL]} name={LOGIN_FORM_FIELDS.EMAIL} onChange={onInputChange} id={'email'} />
+            <input type="email" placeholder="jose@algo.com" value={form_state[LOGIN_FORM_FIELDS.EMAIL]} name={LOGIN_FORM_FIELDS.EMAIL} onChange={onInputChange} id={'email'} />
           </div>
 
           <div className='form-field'>
             <label htmlFor="password">Password: </label>
-            <input type="text" placeholder="Josesito206" value={form_state[LOGIN_FORM_FIELDS.PASSWORD]} name={LOGIN_FORM_FIELDS.PASSWORD} onChange={onInputChange} id={'password'} />
+            <input type="password" placeholder="Josesito206" value={form_state[LOGIN_FORM_FIELDS.PASSWORD]} name={LOGIN_FORM_FIELDS.PASSWORD} onChange={onInputChange} id={'password'} />
           </div>
 
           {error && <span className="errorMessage">{error}</span>}

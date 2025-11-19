@@ -72,7 +72,7 @@ const RegisterScreen = () => {
                   <div className='form-field'>
                       <label htmlFor="email">Email:</label>
                       <input
-                          type="text"
+                          type="email"
                           placeholder='pepe@mail.com'
                           value={form_state[REGISTER_FORM_FIELDS.EMAIL]}
                           name={REGISTER_FORM_FIELDS.EMAIL}
@@ -83,7 +83,7 @@ const RegisterScreen = () => {
                   <div className='form-field'>
                       <label htmlFor="password">Contraseña:</label>
                       <input
-                          type="text"
+                          type="password"
                           placeholder='pepe-123'
                           value={form_state[REGISTER_FORM_FIELDS.PASSWORD]}
                           name={REGISTER_FORM_FIELDS.PASSWORD}
