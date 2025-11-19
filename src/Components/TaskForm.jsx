@@ -55,7 +55,7 @@ const TaskForm = ({ onTaskCreated }) => {
       {error && <div className="error-message">{error}</div>}
 
       <div className="form-group">
-        <label htmlFor="title">Title *</label>
+        <label htmlFor="title">Título *</label>
         <input
           type="text"
           id="title"
@@ -64,12 +64,12 @@ const TaskForm = ({ onTaskCreated }) => {
           onChange={handleChange}
           required
           className="form-input"
-          placeholder="Enter task title"
+          placeholder="Ingresa un título para la tarea"
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="description">Description</label>
+        <label htmlFor="description">Descripción</label>
         <textarea
           id="description"
           name="description"
@@ -77,12 +77,12 @@ const TaskForm = ({ onTaskCreated }) => {
           onChange={handleChange}
           rows="3"
           className="form-textarea"
-          placeholder="Enter task description (optional)"
+          placeholder="Ingresa una descripción para la tarea (opcional)"
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="dueDate">Due Date</label>
+        <label htmlFor="dueDate">Fecha Limite</label>
         <input
           type="date"
           id="dueDate"
@@ -94,7 +94,7 @@ const TaskForm = ({ onTaskCreated }) => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="priority">Priority</label>
+        <label htmlFor="priority">Prioridad</label>
         <select
           id="priority"
           name="priority"
@@ -102,9 +102,9 @@ const TaskForm = ({ onTaskCreated }) => {
           onChange={handleChange}
           className="form-select"
         >
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
+          <option value="low">Baja</option>
+          <option value="medium">Mediana</option>
+          <option value="high">Alta</option>
         </select>
       </div>
 
@@ -113,7 +113,7 @@ const TaskForm = ({ onTaskCreated }) => {
         disabled={loading || !formData.title.trim()}
         className="btn-primary"
       >
-        {loading ? 'Creating...' : 'Create Task'}
+        {loading ? 'Creando...' : 'Crea una tarea'}
       </button>
     </form>
   );

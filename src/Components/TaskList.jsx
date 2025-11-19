@@ -41,7 +41,7 @@ const TaskList = () => {
     }
   };
 
-  if (loading) return <div className="loading">Loading tasks...</div>;
+  if (loading) return <div className="loading">Cargando tus tareas...</div>;
 
   return (
     <div className="task-list">
@@ -50,7 +50,7 @@ const TaskList = () => {
       {error && <div className="error-message">{error}</div>}
 
       {tasks.length === 0 ? (
-        <p>No tasks yet. Create your first task!</p>
+        <p>No tienes tareas pendientes. Crea tu primera tarea!</p>
       ) : (
         <div className="tasks-container">
           {tasks.map(task => (
@@ -81,7 +81,7 @@ const TaskList = () => {
                     )}
 
                     <span className="created-date">
-                      Created: {new Date(task.createdAt).toLocaleDateString()}
+                      Creada: {new Date(task.createdAt).toLocaleDateString()}
                     </span>
                   </div>
                 </div>
@@ -90,7 +90,7 @@ const TaskList = () => {
               <button
                 onClick={() => handleDelete(task._id)}
                 className="btn-delete"
-                title="Delete task"
+                title="Eliminar tarea"
               >
                 🗑️
               </button>

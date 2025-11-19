@@ -32,21 +32,21 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="nav-brand">
-        <Link to="/">TaskManager</Link>
+        <Link to="/">Task Manager 2025</Link>
       </div>
       
       <div className="nav-links">
         {user ? (
           <>
-            <span className="user-welcome">Welcome, {user.username}!</span>
+            <span className="user-welcome">Bienvenido, {user.username}!</span>
             <button onClick={handleLogout} className="btn-logout">
               Logout
             </button>
           </>
         ) : (
           <>
-            <Link to="/login" className="nav-link">Login</Link>
-            <Link to="/register" className="nav-link">Register</Link>
+            <Link to="/login" className="nav-link">¿Quieres realizar otro logueo?</Link>
+            <Link to="/register" className="nav-link">¿No tienes una cuenta?</Link>
           </>
         )}
       </div>
