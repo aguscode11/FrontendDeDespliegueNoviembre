@@ -59,7 +59,7 @@ const LoginScreen = () => {
           if(response && response.ok){
             //Queremos que persista en memoria el auth token
             //Dejamos que el context se encargue de que sucedera
-            onLogin(response.body.auth_token)
+            onLogin(response.body.auth_token, response.body.user)
             
           }
         },

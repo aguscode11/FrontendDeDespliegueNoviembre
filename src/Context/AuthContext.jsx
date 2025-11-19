@@ -47,11 +47,13 @@ const AuthContextProvider = ({children}) => {
         navigate('/login')
     }
 
-    function onLogin (auth_token){
+    function onLogin(auth_token, userData) {
         localStorage.setItem(AUTH_TOKEN_KEY, auth_token)
+        localStorage.setItem("user", JSON.stringify(userData))
+
         setIsLogged(true)
-        const user_session = decodeToken(auth_token)
-        setUser(user_session)
+        setUser(userData)
+
         navigate('/home')
     }
 
