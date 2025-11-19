@@ -22,7 +22,7 @@ const Dashboard = () => {
     <div className="dashboard">
       <header className="dashboard-header">
         <h1>My Task Manager</h1>
-        <p>Welcome back, {user?.username}!</p>
+        <p>Welcome back, {user?.name || "..."}!</p>
       </header>
       
       <div className="dashboard-content">

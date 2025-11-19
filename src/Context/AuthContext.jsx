@@ -54,7 +54,7 @@ const AuthContextProvider = ({children}) => {
         setIsLogged(true)
         setUser(userData)
 
-        navigate('/home')
+        navigate('/home', { replace: true })  // no se puede volver atras
     }
 
 
