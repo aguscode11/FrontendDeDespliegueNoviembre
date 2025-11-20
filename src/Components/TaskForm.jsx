@@ -13,6 +13,8 @@ const TaskForm = ({ onTaskCreated }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -82,7 +84,7 @@ const TaskForm = ({ onTaskCreated }) => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="dueDate">Fecha Limite</label>
+        <label htmlFor="dueDate">Fecha límite</label>
         <input
           type="date"
           id="dueDate"
@@ -103,7 +105,7 @@ const TaskForm = ({ onTaskCreated }) => {
           className="form-select"
         >
           <option value="low">Baja</option>
-          <option value="medium">Mediana</option>
+          <option value="medium">Media</option>
           <option value="high">Alta</option>
         </select>
       </div>

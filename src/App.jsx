@@ -1,12 +1,9 @@
-import { useState, useEffect, useContext } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import LoginScreen from './Screens/LoginScreen/LoginScreen'
 import Dashboard from './Components/Dashboard';
 import Navbar from './Components/Navbar'
 import RegisterScreen from './Screens/RegisterScreen/RegisterScreen'
 import HomeScreen from './Screens/HomeScreen/HomeScreen'
-import AuthMiddleware from './Middleware/AuthMiddleware'
-import AuthContextProvider, { AuthContext } from './Context/AuthContext'
 import './App.css';
 import ProtectedRoute from "./Components/ProtectedRoute"
 import PublicRoute from "./Components/PublicRoute"
