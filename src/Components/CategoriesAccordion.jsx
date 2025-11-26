@@ -17,7 +17,7 @@ const CategoriesAccordion = ({ onUpdated }) => {
 
   const load = async () => {
     const res = await getCategories();
-    setCategories(res.data); // aseguramos que categories = array
+    setCategories(res.data); 
   };
 
   useEffect(() => {
@@ -99,7 +99,7 @@ const CategoriesAccordion = ({ onUpdated }) => {
                     deleteCategory(cat._id)
                       .then(() => {
                         load();
-                        if (onUpdated) onUpdated();  // 🔥 TRIGGER refresco de TaskList
+                        if (onUpdated) onUpdated();  // TRIGGER refresco de TaskList
                       });
                   }}
                 >

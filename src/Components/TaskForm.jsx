@@ -100,8 +100,7 @@ const TaskForm = ({ onTaskCreated }) => {
           className="form-input"
         />
       </div>
-
-      {/* 🔥 Select de categorías */}
+      
       <div className="form-group">
         <label>Categoría</label>
 
