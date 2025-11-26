@@ -72,6 +72,19 @@ const TaskList = () => {
     else groups.upcoming.push(task);
   });
 
+  // ---- Ordenar dentro de cada grupo por prioridad ----
+const priorityOrder = { high: 3, medium: 2, low: 1 };
+
+Object.keys(groups).forEach((key) => {
+  groups[key].sort((a, b) => {
+    const pa = priorityOrder[a.priority] || 0;
+    const pb = priorityOrder[b.priority] || 0;
+    // primero las de mayor prioridad
+    return pb - pa;
+  });
+});
+
+
   const sections = [
     { key: "overdue", label: "⚠️ Vencidas" },
     { key: "today", label: "📅 Hoy" },
