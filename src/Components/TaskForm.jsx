@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createTask } from '../services/taskService';
+import { getCategories } from "../services/categoryService";
 
 const TaskForm = ({ onTaskCreated }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     dueDate: '',
-    priority: 'medium'
+    priority: 'medium',
+    categoryId: ''
   });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [categories, setCategories] = useState([]);
+
+  // 🔥 Cargar categorías al montar
+  useEffect(() => {
+    getCategories().then(res => {
+      setCategories(res.data || []);
+    });
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -28,6 +38,8 @@ const TaskForm = ({ onTaskCreated }) => {
       setLoading(true);
       setError('');
 
+      console.log("📤 Enviando al backend:", formData);
+
       await createTask(formData);
 
       // Limpiar formulario
@@ -35,10 +47,10 @@ const TaskForm = ({ onTaskCreated }) => {
         title: '',
         description: '',
         dueDate: '',
-        priority: 'medium'
+        priority: 'medium',
+        categoryId: ''
       });
 
-      // Notificar al componente padre
       if (onTaskCreated) {
         onTaskCreated();
       }
@@ -52,42 +64,36 @@ const TaskForm = ({ onTaskCreated }) => {
 
   return (
     <form onSubmit={handleSubmit} className="task-form">
-      <h3>Create New Task</h3>
+      <h3>Crear nueva tarea</h3>
 
       {error && <div className="error-message">{error}</div>}
 
       <div className="form-group">
-        <label htmlFor="title">Título *</label>
+        <label>Título *</label>
         <input
           type="text"
-          id="title"
           name="title"
           value={formData.title}
           onChange={handleChange}
-          required
           className="form-input"
-          placeholder="Ingresa un título para la tarea"
+          required
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="description">Descripción</label>
+        <label>Descripción</label>
         <textarea
-          id="description"
           name="description"
           value={formData.description}
           onChange={handleChange}
-          rows="3"
           className="form-textarea"
-          placeholder="Ingresa una descripción para la tarea (opcional)"
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="dueDate">Fecha límite</label>
+        <label>Fecha límite</label>
         <input
           type="date"
-          id="dueDate"
           name="dueDate"
           value={formData.dueDate}
           onChange={handleChange}
@@ -95,10 +101,29 @@ const TaskForm = ({ onTaskCreated }) => {
         />
       </div>
 
+      {/* 🔥 Select de categorías */}
       <div className="form-group">
-        <label htmlFor="priority">Prioridad</label>
+        <label>Categoría</label>
+
         <select
-          id="priority"
+          name="categoryId"
+          value={formData.categoryId}
+          onChange={handleChange}
+          className="form-select"
+        >
+          <option value="">Sin categoría</option>
+
+          {categories.map(cat => (
+            <option key={cat._id} value={cat._id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="form-group">
+        <label>Prioridad</label>
+        <select
           name="priority"
           value={formData.priority}
           onChange={handleChange}
@@ -110,12 +135,8 @@ const TaskForm = ({ onTaskCreated }) => {
         </select>
       </div>
 
-      <button
-        type="submit"
-        disabled={loading || !formData.title.trim()}
-        className="btn-primary"
-      >
-        {loading ? 'Creando...' : 'Crea una tarea'}
+      <button className="btn-primary" disabled={loading || !formData.title.trim()}>
+        {loading ? "Creando..." : "Crear tarea"}
       </button>
     </form>
   );

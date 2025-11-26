@@ -123,6 +123,23 @@ const TaskList = () => {
             <span className="created-date">
               Creada: {new Date(task.createdAt).toLocaleDateString()}
             </span>
+            {task.categoryId && (
+              <span
+                className="task-category"
+                style={{
+                  background: task.categoryId.color + "40",
+                  color: task.categoryId.color,
+                  padding: "0.2rem 0.5rem",
+                  borderRadius: "8px",
+                  fontSize: "0.75rem",
+                  fontWeight: "600",
+                  maxHeight: "23px",
+                }}
+              >
+                {task.categoryId.name}
+              </span>
+            )}
+
           </div>
         </div>
       </div>
