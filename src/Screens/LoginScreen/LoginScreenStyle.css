@@ -92,3 +92,8 @@
   color: #4caf50;
   margin-top: -8px;
 }
+
+@media (max-width: 460px) {
+  .loginBox{
+  max-width: 80%;}
+}

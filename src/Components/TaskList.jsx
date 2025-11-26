@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { getTasks, deleteTask, updateTask } from '../services/taskService';
+import React, { useState, useEffect } from "react";
+import { getTasks, deleteTask, updateTask } from "../services/taskService";
+import EditTaskForm from "./EditTaskForm";
+
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
+  const [openSection, setOpenSection] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const [editingTask, setEditingTask] = useState(null);
 
   const loadTasks = async () => {
     try {
       setLoading(true);
       const response = await getTasks();
       setTasks(response.data);
-      setError('');
+      setError("");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -26,16 +30,17 @@ const TaskList = () => {
   const handleDelete = async (id) => {
     try {
       await deleteTask(id);
-      await loadTasks();
+      loadTasks();
     } catch (err) {
       setError(err.message);
     }
   };
 
-  const toggleComplete = async (task) => {
+  const toggleComplete = async (task, e) => {
+    e.stopPropagation(); // evita romper el accordion
     try {
       await updateTask(task._id, { completed: !task.completed });
-      await loadTasks();
+      loadTasks();
     } catch (err) {
       setError(err.message);
     }
@@ -43,74 +48,67 @@ const TaskList = () => {
 
   if (loading) return <div className="loading">Cargando tus tareas...</div>;
 
-  // --------------------------------------------------------
-  // ORDEN SIMPLE Y EFICIENTE POR PRIORIDAD
-  // --------------------------------------------------------
+  // ---- Agrupar tareas ----
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  const priorityOrder = { high: 3, medium: 2, low: 1 };
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
 
-  const sortByPriority = (tasksArray) =>
-    [...tasksArray].sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]);
-
-  // --------------------------------------------------------
-  // GRUPOS (SE MANTIENEN IGUAL QUE EN TU CÓDIGO)
-  // --------------------------------------------------------
-
-  const groupTasks = (tasks) => {
-    const today = new Date(); today.setHours(0, 0, 0, 0);
-    const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1);
-
-    const groups = {
-      overdue: [],
-      today: [],
-      tomorrow: [],
-      upcoming: []
-    };
-
-    tasks.forEach(task => {
-      if (!task.dueDate) {
-        groups.today.push(task);
-        return;
-      }
-
-      const due = new Date(task.dueDate);
-      due.setHours(0, 0, 0, 0);
-
-      if (due < today) groups.overdue.push(task);
-      else if (due.getTime() === today.getTime()) groups.today.push(task);
-      else if (due.getTime() === tomorrow.getTime()) groups.tomorrow.push(task);
-      else groups.upcoming.push(task);
-    });
-
-    // Aplicamos el sort por prioridad dentro de cada grupo
-    return {
-      overdue: sortByPriority(groups.overdue),
-      today: sortByPriority(groups.today),
-      tomorrow: sortByPriority(groups.tomorrow),
-      upcoming: sortByPriority(groups.upcoming)
-    };
+  const groups = {
+    overdue: [],
+    today: [],
+    tomorrow: [],
+    upcoming: [],
   };
 
-  const grouped = groupTasks(tasks);
+  tasks.forEach((task) => {
+    const due = task.dueDate ? new Date(task.dueDate) : today;
+    due.setHours(0, 0, 0, 0);
 
-  // --------------------------------------------------------
-  // TEMPLATE PARA MOSTRAR TAREAS
-  // --------------------------------------------------------
+    if (due < today) groups.overdue.push(task);
+    else if (due.getTime() === today.getTime()) groups.today.push(task);
+    else if (due.getTime() === tomorrow.getTime()) groups.tomorrow.push(task);
+    else groups.upcoming.push(task);
+  });
+
+  const sections = [
+    { key: "overdue", label: "⚠️ Vencidas" },
+    { key: "today", label: "📅 Hoy" },
+    { key: "tomorrow", label: "📅 Mañana" },
+    { key: "upcoming", label: "📅 Próximamente" },
+  ];
+
+  //editar
+
+
+  const startEditing = (task) => {
+    setEditingTask(task);
+  };
+
 
   const renderTask = (task) => (
-    <div key={task._id} className={`task-item ${task.completed ? 'completed' : ''}`}>
+    <div
+      key={task._id}
+      className={`task-item ${task.completed ? "completed" : ""}`}
+    >
       <div className="task-content">
+        {/* checkbox con stopPropagation */}
         <input
           type="checkbox"
           checked={task.completed}
-          onChange={() => toggleComplete(task)}
+          onChange={(e) => toggleComplete(task, e)}
           className="task-checkbox"
         />
 
         <div className="task-details">
           <h3 className="task-title">{task.title}</h3>
-          {task.description && <p className="task-description">{task.description}</p>}
 
+          {task.description && (
+            <p className="task-description">{task.description}</p>
+          )}
+
+          {/* META DATA */}
           <div className="task-meta">
             <span className={`priority-badge priority-${task.priority}`}>
               {task.priority}
@@ -128,46 +126,78 @@ const TaskList = () => {
           </div>
         </div>
       </div>
+      <div className="button-container">
+        <button
+          onClick={() => handleDelete(task._id)}
+          className="btn-delete"
+          title="Eliminar tarea"
+        >
+          🗑️
+        </button>
+        <button
+          className="btn-edit"
+          onClick={() => startEditing(task)}
+        >
+          ✏️
+        </button>
+      </div>
 
-      <button onClick={() => handleDelete(task._id)} className="btn-delete">
-        🗑️
-      </button>
     </div>
   );
+  
+
 
   return (
-    <div className="task-list">
-      <h2>Mis tareas</h2>
+    <div className="task-list" style={{ padding: "1.5rem" }}>
+
+      {/* EDIT MODAL */}
+      {editingTask && (
+        <EditTaskForm
+          task={editingTask}
+          onClose={() => setEditingTask(null)}
+          onUpdated={() => {
+            loadTasks();
+            setEditingTask(null);
+          }}
+        />
+      )}
+
+      <h2 style={{ marginBottom: "1rem" }}>Mis tareas</h2>
 
       {error && <div className="error-message">{error}</div>}
 
-      {grouped.overdue.length > 0 && (
-        <>
-          <h3>⚠️ Vencidas</h3>
-          {grouped.overdue.map(renderTask)}
-        </>
+      {tasks.length === 0 && (
+        <div className="empty-tasks">
+          No hay tareas disponibles… qué aburrido 😴
+        </div>
       )}
 
-      {grouped.today.length > 0 && (
-        <>
-          <h3>📅 Hoy</h3>
-          {grouped.today.map(renderTask)}
-        </>
-      )}
 
-      {grouped.tomorrow.length > 0 && (
-        <>
-          <h3>📅 Mañana</h3>
-          {grouped.tomorrow.map(renderTask)}
-        </>
-      )}
+      {sections.map(({ key, label }) => {
+        if (groups[key].length === 0) return null;
 
-      {grouped.upcoming.length > 0 && (
-        <>
-          <h3>📅 Próximamente</h3>
-          {grouped.upcoming.map(renderTask)}
-        </>
-      )}
+        const isOpen = openSection === key;
+
+        return (
+          <div key={key} className="task-section">
+            {/* HEADER */}
+            <button
+              className="accordion-header"
+              onClick={() => setOpenSection(isOpen ? null : key)}
+            >
+              {label}
+              <span className="accordion-toggle">{isOpen ? "▲" : "▼"}</span>
+            </button>
+
+            {/* CONTENIDO */}
+            {isOpen && (
+              <div className="accordion-content">
+                {groups[key].map((task) => renderTask(task))}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };

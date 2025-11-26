@@ -114,3 +114,8 @@ span[style*="red"] {
 span[style*="green"] {
   color: #4caf50 !important;
 }
+
+@media (max-width: 460px) {
+  .registerBox{
+  max-width: 80%;}
+}

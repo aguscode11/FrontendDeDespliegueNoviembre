@@ -34,74 +34,94 @@ h1, h2, h3 {
   color: var(--text);
 }
 
+
+
 /* ===========================
    NAVBAR
    =========================== */
 
 .navbar {
   background: var(--bg-panel);
-  padding: 1rem 2rem;
+  padding: 0.8rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #3a3a3c;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.nav-brand a {
-  font-size: 1.4rem;
-  font-weight: 600;
-}
-
-.nav-links {
+.nav-left {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.7rem;
 }
 
-.user-welcome {
+.icon-menu {
   color: var(--text-muted);
-  font-size: 0.95rem;
-}
-
-.btn-logout {
-  padding: 0.4rem 1rem;
-  background: #ff453a;
-  border: none;
-  color: white;
-  border-radius: var(--radius);
   cursor: pointer;
-  transition: opacity .2s;
 }
 
-.btn-logout:hover {
-  opacity: 0.85;
+.nav-title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text);
 }
 
-@media (max-width: 480px) {
-  .dashboard-content {
-    grid-template-columns: 1fr !important;
-    padding: 10px;
-    gap: 1rem;
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.avatar {
+  width: 33px;
+  height: 33px;
+  background: var(--bg-alt);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  border: 1px solid #3a3a3c;
+}
+
+.user-name {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  border-radius: 8px;
+  color: var(--text-muted);
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-icon:hover {
+  background: #3a3a3c;
+  color: var(--text);
+}
+
+@media (max-width: 460px) {
+  .user-name {
+    display: none;
+  }
+  .created-date{
+    display: none;
+  }
+
+  .nav-title {
+    font-size: 1.1rem;
   }
 }
-
-.task-item {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.task-content {
-  display: flex;
-  flex-wrap: wrap;
-  min-width: 0;
-}
-
-.btn-delete {
-  align-self: flex-end;
-  margin-top: 0.5rem;
-}
-
-
 
 /* ===========================
    DASHBOARD
@@ -183,6 +203,12 @@ h1, h2, h3 {
   background: #777;
 }
 
+.btn-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
 /* ===========================
    TASK LIST
    =========================== */
@@ -201,7 +227,6 @@ h1, h2, h3 {
 .task-item {
   display: flex;
   justify-content: space-between;
-  flex-direction: row;
   padding: 1rem;
   background: var(--bg-alt);
   border-radius: var(--radius);
@@ -222,7 +247,6 @@ h1, h2, h3 {
   display: flex;
   gap: 1rem;
 }
-
 
 .task-title {
   font-weight: 600;
@@ -247,12 +271,24 @@ h1, h2, h3 {
   gap: 1rem;
 }
 
+.empty-tasks {
+  text-align: center;
+  padding: 2rem;
+  background: var(--bg-alt);
+  border-radius: var(--radius);
+  border: 1px solid #3a3a3c;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+
 /* PRIORITY */
 .priority-badge {
   padding: 0.2rem 0.5rem;
   border-radius: var(--radius);
   font-size: 0.75rem;
   font-weight: 600;
+  max-height: 30px;
 }
 
 .priority-low {
@@ -295,4 +331,152 @@ h1, h2, h3 {
   padding: 0.8rem;
   border-radius: var(--radius);
   margin-bottom: 1rem;
+}
+
+/* Nueva tarea */
+.new-task-bar {
+  background: var(--bg-alt);
+  padding: 0.8rem;
+  border-radius: var(--radius);
+  text-align: center;
+  margin-bottom: 1rem;
+  border: 1px solid #3a3a3c;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Accordion minimalista */
+.task-section {
+  margin-bottom: 1rem;
+}
+
+.accordion-header {
+  width: 100%;
+  background: var(--bg-alt);
+  padding: 0.8rem 1rem;
+  color: var(--text);
+  font-size: 1rem;
+  border: 1px solid #3a3a3c;
+  border-radius: var(--radius);
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.accordion-content {
+  margin-top: 0.5rem;
+}
+
+.accordion-toggle{
+  margin: 0px;
+}
+
+/* ===========================
+   FIX: CENTRAR FORM + LIST
+   =========================== */
+
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.task-form {
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+.task-list {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.task-section {
+  padding: 0.3rem 0;
+}
+
+.task-form-section{
+  margin-bottom: 20px;
+}
+
+.accordion-header,
+.accordion-content,
+.task-item {
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+@media (max-width: 768px) {
+  .task-form,
+  .task-list,
+  .accordion-header,
+  .accordion-content,
+  .task-item {
+    max-width: 90%;
+  }
+
+  .dashboard-content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .due-date{
+    display: none;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px);
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.modal {
+  background: var(--bg-panel);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  width: 90%;
+  max-width: 500px;
+  border: 1px solid #3a3a3c;
+  box-shadow: var(--shadow);
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-secondary {
+  margin-top: 0.5rem;
+  width: 100%;
+  background: var(--bg-alt);
+  border: 1px solid #3a3a3c;
+  padding: 0.6rem;
+  border-radius: var(--radius);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.edit-form{
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.button-container{
+  width: 45px;
 }

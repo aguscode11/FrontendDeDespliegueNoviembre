@@ -18,6 +18,25 @@ export async function createTask(taskData) {
     const response = await response_http.json()
     return response
 }
+export async function editTaskAPI(id, data) {
+  const response = await fetch(
+    `${ENVIRONMENT.URL_API}/api/tasks/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Error al editar la tarea");
+  }
+
+  return await response.json();
+}
 
 export async function getTasks() {
     const response_http = await fetch(
