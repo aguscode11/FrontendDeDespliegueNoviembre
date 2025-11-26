@@ -1,0 +1,177 @@
+🚀 README – Frontend (React + Vite)
+
+Interfaz web para la aplicación Task Manager, desarrollada con React + Vite, que consume la API del backend desplegado.
+Incluye autenticación con JWT, pantallas protegidas, CRUD completo de tareas y categorías, diseño responsive y manejo de estados global con Context.
+
+# 🎨 Tecnologías utilizadas
+
+React 18
+
+Vite
+
+React Router DOM
+
+Context API (AuthContext)
+
+Custom hooks (useFetch, useForm)
+
+CSS Modules / archivos CSS
+
+Fetch API (sin Axios)
+
+# 📁 Estructura del proyecto
+src/
+ ├─ components/
+ │   ├─ Navbar.jsx
+ │   ├─ ProtectedRoute.jsx
+ │   ├─ PublicRoute.jsx
+ │   ├─ TaskForm.jsx
+ │   ├─ TaskList.jsx
+ │   ├─ EditTaskForm.jsx
+ │   ├─ CategoriesAccordion.jsx
+ │   ├─ EditCategoryForm.jsx
+ │   └─ Dashboard.jsx
+ ├─ context/
+ │   └─ AuthContext.jsx
+ ├─ hooks/
+ │   ├─ useFetch.jsx
+ │   └─ useForm.jsx
+ ├─ pages/
+ │   ├─ LoginScreen.jsx
+ │   ├─ RegisterScreen.jsx
+ │   └─ HomeScreen.jsx
+ ├─ services/
+ │   ├─ authService.js
+ │   ├─ taskService.js
+ │   └─ categoryService.js
+ ├─ styles/
+ │   ├─ App.css
+ │   ├─ LoginScreenStyle.css
+ │   ├─ RegisterScreenStyle.css
+ │   └─ etc...
+ ├─ environment.js
+ ├─ App.jsx
+ ├─ main.jsx
+
+
+
+Crear archivo .env en la raíz del proyecto:
+
+VITE_APP_API_URL=https://TU_BACKEND_DEPLOY
+
+
+El frontend maneja autenticación mediante:
+
+Login (obtiene un JWT)
+
+AuthContext guarda usuario + token
+
+localStorage para persistencia
+
+ProtectedRoute protege rutas privadas
+
+Logout automático cuando se elimina el token
+
+🧠 Flujo básico:
+
+Usuario se registra → backend envía email de verificación
+
+Usuario verifica su cuenta
+
+Usuario hace login → recibe token
+
+Token se guarda en localStorage
+
+Todas las peticiones usan Authorization: Bearer <token>
+
+Si el token expira → se eliminan datos y se redirige al login
+
+# 📌 Pantallas del frontend
+🟦 Login
+
+Formulario con email + password
+
+Manejo de errores del backend
+
+Redirección automática al Dashboard
+
+🟩 Register
+
+Formulario de registro
+
+Envía datos al backend
+
+Muestra mensaje de verificación de email
+
+🟨 Dashboard
+
+Incluye:
+
+Lista de tareas agrupadas:
+
+Vencidas
+
+Hoy
+
+Mañana
+
+Próximas
+
+Tareas ordenadas por prioridad dentro de cada grupo
+
+Botón para crear nuevas tareas
+
+Modal de edición
+
+Edición de categoría de una tarea
+
+Cambiar categoría por “Sin categoría”
+
+🟪 Categorías
+
+Crear categorías
+
+Editar nombre y color
+
+Eliminar categorías
+
+Actualización automática del TaskList
+
+# 🧩 Componentes clave
+🔐 ProtectedRoute.jsx
+
+Bloquea acceso si no hay token.
+
+🌐 AuthContext.jsx
+
+Maneja:
+
+usuario
+
+token
+
+login/logout
+
+persistencia
+
+protección de rutas
+
+📅 TaskList.jsx
+
+Organiza tareas por fecha
+
+Ordena por prioridad
+
+Abre modal de edición
+
+Actualiza cuando se edita categoría o tarea
+
+📝 EditTaskForm.jsx
+
+Editar toda la tarea
+
+Selector de categoría
+
+Permitir “sin categoría”
+
+Guardar cambios
